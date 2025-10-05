@@ -263,31 +263,32 @@ const DashboardProductDetails = ({
         </div>
         {/* Product category select input div - end */}
 
-        {/* Main image file upload div - start */}
-        <div>
-          <input
-            type="file"
-            className="file-input file-input-bordered file-input-lg w-full max-w-sm"
-            onChange={(e) => {
-              const selectedFile = e.target.files[0];
+{/* Main image file upload div - start */}
+<div>
+  <input
+    type="file"
+    className="file-input file-input-bordered file-input-lg w-full max-w-sm"
+    onChange={(e) => {
+      const files = e.target.files;
+      if (!files || files.length === 0) return; // cek null atau kosong
 
-              if (selectedFile) {
-                uploadFile(selectedFile);
-                setProduct({ ...product!, mainImage: selectedFile.name });
-              }
-            }}
-          />
-          {product?.mainImage && (
-            <Image
-              src={`/` + product?.mainImage}
-              alt={product?.title}
-              className="w-auto h-auto mt-2"
-              width={100}
-              height={100}
-            />
-          )}
-        </div>
-        {/* Main image file upload div - end */}
+      const selectedFile = files[0];
+      uploadFile(selectedFile);
+      setProduct({ ...product!, mainImage: selectedFile.name });
+    }}
+  />
+  {product?.mainImage && (
+    <Image
+      src={`/${product.mainImage}`}
+      alt={product?.title || "Product Image"}
+      className="w-auto h-auto mt-2"
+      width={100}
+      height={100}
+    />
+  )}
+</div>
+{/* Main image file upload div - end */}
+
         {/* Other images file upload div - start */}
         <div className="flex gap-x-1">
           {otherImages &&
